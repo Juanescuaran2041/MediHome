@@ -12,6 +12,7 @@ public class EquipoAtencion {
         this.codigo = codigo;
         this.nombre = nombre;
         this.zonaAtencion = zonaAtencion;
+        this.listaProfesionalSalud = new ArrayList<>();
     }
 
     public String getCodigo() {
@@ -38,8 +39,11 @@ public class EquipoAtencion {
         this.zonaAtencion = zonaAtencion;
     }
 
-    public void AgregarProfesional (ProfesionalSalud profesionalSalud){
+    public List<ProfesionalSalud> getListaProfesionalSalud() {
+        return listaProfesionalSalud;
+    }
 
+    public void agregarProfesional(ProfesionalSalud profesionalSalud) {
         if (profesionalSalud == null) {
             throw new IllegalArgumentException("El profesional registrado no es correcto");
         }
@@ -47,16 +51,12 @@ public class EquipoAtencion {
         listaProfesionalSalud.add(profesionalSalud);
     }
 
-    public List<ProfesionalSalud> getListaProfesionalSalud() {
-        return listaProfesionalSalud;
-    }
-
-    public void retirarProfesional (ProfesionalSalud profesionalSalud){
+    public void retirarProfesional(ProfesionalSalud profesionalSalud) {
         if (profesionalSalud == null) {
             throw new IllegalArgumentException("El profesional registrado no es correcto");
         }
         if (!this.listaProfesionalSalud.contains(profesionalSalud)) {
-            throw  new  IllegalArgumentException("El profesional no se encuentra registrado actualmente");
+            throw new IllegalArgumentException("El profesional no se encuentra registrado actualmente");
         }
 
         listaProfesionalSalud.remove(profesionalSalud);
