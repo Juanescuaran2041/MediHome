@@ -3,6 +3,7 @@ public class EquipoAtencion {
     private String nombre;
     private String zonaAtencion;
 
+    private ProfesionalSalud profesionalSalud;
 
     public EquipoAtencion(String codigo, String nombre, String zonaAtencion) {
         this.codigo = codigo;
@@ -34,7 +35,11 @@ public class EquipoAtencion {
         this.zonaAtencion = zonaAtencion;
     }
 
-    public void AgregarProfesional (ProfesionalSalud profesionalSalud){
+    public void AgregarProfesional (ProfesionalSalud profesionalSalud) {
+        this.profesionalSalud = profesionalSalud;
+    }
 
+    public void retirarProfesional() {
+        this.profesionalSalud = null;
     }
 }
