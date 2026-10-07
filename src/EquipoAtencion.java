@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class EquipoAtencion {
@@ -5,7 +6,7 @@ public class EquipoAtencion {
     private String nombre;
     private String zonaAtencion;
 
-    private List<ProfesionalSalud> listaProfesionalSalud;
+    private List<ProfesionalSalud> listaProfesionalSalud = new ArrayList<>();
 
     public EquipoAtencion(String codigo, String nombre, String zonaAtencion) {
         this.codigo = codigo;
@@ -39,5 +40,25 @@ public class EquipoAtencion {
 
     public void AgregarProfesional (ProfesionalSalud profesionalSalud){
 
+        if (profesionalSalud == null) {
+            throw new IllegalArgumentException("El profesional registrado no es correcto");
+        }
+
+        listaProfesionalSalud.add(profesionalSalud);
+    }
+
+    public List<ProfesionalSalud> getListaProfesionalSalud() {
+        return listaProfesionalSalud;
+    }
+
+    public void retirarProfesional (ProfesionalSalud profesionalSalud){
+        if (profesionalSalud == null) {
+            throw new IllegalArgumentException("El profesional registrado no es correcto");
+        }
+        if (!this.listaProfesionalSalud.contains(profesionalSalud)) {
+            throw  new  IllegalArgumentException("El profesional no se encuentra registrado actualmente");
+        }
+
+        listaProfesionalSalud.remove(profesionalSalud);
     }
 }
