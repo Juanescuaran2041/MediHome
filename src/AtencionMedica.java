@@ -47,4 +47,8 @@ public class AtencionMedica {
     public void setRecomendacion(String recomendacion) {
         this.recomendacion = recomendacion;
     }
+
+    public SignosVitales getSignosVitales() {
+        return signosVitales;
+    }
 }

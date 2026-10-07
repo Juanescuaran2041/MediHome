@@ -64,4 +64,8 @@ public class SignosVitales {
     public void setSaturacionOxigeno(double saturacionOxigeno) {
         SaturacionOxigeno = saturacionOxigeno;
     }
+
+    public void registrarMedicion() {
+        System.out.println("Medición registrada: " + fecha);
+    }
 }
