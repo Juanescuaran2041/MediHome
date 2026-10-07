@@ -75,4 +75,32 @@ public class ServicioDomiciliario {
     public void setProfesionalSalud(ProfesionalSalud profesionalSalud) {
         this.profesionalSalud = profesionalSalud;
     }
+
+    public AtencionMedica getAtencionMedica() {
+        return atencionMedica;
+    }
+
+    public void setAtencionMedica(AtencionMedica atencionMedica) {
+        this.atencionMedica = atencionMedica;
+    }
+
+    public void programarServicio(LocalDate fechaProgramada) {
+        this.fechaProgramada = fechaProgramada;
+        System.out.println("Servicio domiciliario programado para: " + fechaProgramada);
+    }
+
+    public void asignarProfesional(ProfesionalSalud profesionalSalud) {
+        this.profesionalSalud = profesionalSalud;
+        System.out.println("Profesional de salud asignado: " + profesionalSalud.getNombre());
+    }
+
+    public void iniciarServicio() {
+        this.estado = EstadoServicio.EN_PROGRESO;
+        System.out.println("Servicio domiciliario iniciado.");
+    }
+
+    public void finalizarServicio() {
+        this.estado = EstadoServicio.FINALIZADO;
+        System.out.println("Servicio domiciliario finalizado.");
+    }
 }
