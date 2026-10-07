@@ -1,8 +1,11 @@
+import java.util.List;
+
 public class EquipoAtencion {
     private String codigo;
     private String nombre;
     private String zonaAtencion;
 
+    private List<ProfesionalSalud> listaProfesionalSalud;
 
     public EquipoAtencion(String codigo, String nombre, String zonaAtencion) {
         this.codigo = codigo;
