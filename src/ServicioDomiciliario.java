@@ -107,7 +107,7 @@ public class ServicioDomiciliario {
             throw new IllegalArgumentException("El profesional asignado no es correcto");
         }
         if (!profesionalSalud.estaDisponible(fechaProgramada)) {
-            throw new IllegalStateException("El profesional " + profesionalSalud.getNombre() + " no está disponible para " + fechaProgramada);
+            throw new IllegalStateException("El profesional no está disponible para " + fechaProgramada);
         }
 
         this.profesionalSalud = profesionalSalud;
@@ -131,7 +131,6 @@ public class ServicioDomiciliario {
         }
 
         this.estado = EstadoServicio.CANCELADO;
-        System.out.println("Servicio domiciliario cancelado.");
 
         String mensaje = "El servicio " + codigo + " ha sido cancelado.";
         if (paciente != null && profesionalSalud != null) {
@@ -141,14 +140,14 @@ public class ServicioDomiciliario {
     }
 
     public String generarReporte() {
-        String reporte = "========== REPORTE DE ATENCIÓN ==========\n";
+        String reporte = "------REPORTE DE ATENCIÓN-------\n";
         reporte += "Servicio: " + codigo + "\n";
         reporte += "Fecha programada: " + fechaProgramada + "\n";
         reporte += "Dirección: " + direccionAtencion + "\n";
         reporte += "Motivo: " + motivo + "\n";
         reporte += "Estado: " + estado + "\n";
 
-        reporte += "\n--- Paciente ---\n";
+        reporte += "\n---Paciente---\n";
         if (paciente != null) {
             reporte += "ID: " + paciente.getIdentificacion() + "\n";
             reporte += "Nombre: " + paciente.getNombre() + "\n";
@@ -156,42 +155,35 @@ public class ServicioDomiciliario {
             reporte += "Teléfono: " + paciente.getTelefono() + "\n";
             reporte += "Dirección principal: " + paciente.getDireccionPrincipal() + "\n";
         } else {
-            reporte += "Sin paciente registrado\n";
+            reporte += "Sin paciente \n";
         }
 
-        reporte += "\n--- Profesional de salud ---\n";
+        reporte += "\n---Profesional salud---\n";
         if (profesionalSalud != null) {
             reporte += "ID: " + profesionalSalud.getIdentificacion() + "\n";
             reporte += "Nombre: " + profesionalSalud.getNombre() + "\n";
             reporte += "Registro profesional: " + profesionalSalud.getRegistroProfesional() + "\n";
             reporte += "Especialidad: " + profesionalSalud.getEspecialidad() + "\n";
         } else {
-            reporte += "Sin profesional asignado\n";
+            reporte += "Sin profesional \n";
         }
 
-        reporte += "\n--- Atención médica ---\n";
+        reporte += "\n---Atención médica---\n";
         if (atencionMedica != null) {
             reporte += "Inicio: " + atencionMedica.getFechaInicio() + "\n";
             reporte += "Fin: " + atencionMedica.getFechaFin() + "\n";
             reporte += "Observaciones: " + atencionMedica.getObservaciones() + "\n";
             reporte += "Recomendaciones: " + atencionMedica.getRecomendaciones() + "\n";
 
-            reporte += "\n--- Signos vitales ---\n";
-            if (atencionMedica.getSignosVitales().isEmpty()) {
-                reporte += "Sin mediciones registradas\n";
-            }
+            reporte += "\n---Signos vitales---\n";
             for (SignosVitales signos : atencionMedica.getSignosVitales()) {
                 reporte += "Medición: " + signos.getFecha() + "\n";
-                reporte += "  Temperatura: " + signos.getTemperatura() + " °C\n";
-                reporte += "  Frecuencia cardiaca: " + signos.getFrecuenciaCardiaca() + " lpm\n";
-                reporte += "  Presión arterial: " + signos.getPresionSistolica() + "/" + signos.getPresionDiastolica() + " mmHg\n";
-                reporte += "  Saturación de oxígeno: " + signos.getSaturacionOxigeno() + " %\n";
+                reporte += "  Temperatura: " + signos.getTemperatura() + "\n";
+                reporte += "  Frecuencia cardiaca: " + signos.getFrecuenciaCardiaca() + "\n";
+                reporte += "  Presión arterial: " + signos.getPresionSistolica() + "/" + signos.getPresionDiastolica() + "\n";
+                reporte += "  Saturación de oxígeno: " + signos.getSaturacionOxigeno() + "\n";
             }
-        } else {
-            reporte += "Sin atención registrada\n";
         }
-
-        reporte += "=========================================";
         return reporte;
     }
 }
