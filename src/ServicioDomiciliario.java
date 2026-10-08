@@ -1,8 +1,8 @@
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ServicioDomiciliario {
     private String codigo;
-    private LocalDate fechaProgramada;
+    private LocalDateTime fechaProgramada;
     private String direccionAtencion;
     private String motivo;
     private EstadoServicio estado;
@@ -12,7 +12,7 @@ public class ServicioDomiciliario {
 
     private AtencionMedica atencionMedica;
 
-    public ServicioDomiciliario(String codigo, LocalDate fechaProgramada, String direccionAtencion, String motivo, EstadoServicio estado) {
+    public ServicioDomiciliario(String codigo, LocalDateTime fechaProgramada, String direccionAtencion, String motivo, EstadoServicio estado) {
         this.codigo = codigo;
         this.fechaProgramada = fechaProgramada;
         this.direccionAtencion = direccionAtencion;
@@ -20,31 +20,37 @@ public class ServicioDomiciliario {
         this.estado = estado;
     }
 
-    public LocalDate getFechaProgramada() {
+    public LocalDateTime getFechaProgramada() {
         return fechaProgramada;
     }
 
     public String getCodigo() {
+
         return codigo;
     }
 
     public String getMotivo() {
+
         return motivo;
     }
 
     public String getDireccionAtencion() {
+
         return direccionAtencion;
     }
 
     public EstadoServicio getEstado() {
+
         return estado;
     }
 
     public void setCodigo(String codigo) {
+
         this.codigo = codigo;
     }
 
-    public void setFechaProgramada(LocalDate fechaProgramada) {
+    public void setFechaProgramada(LocalDateTime fechaProgramada) {
+
         this.fechaProgramada = fechaProgramada;
     }
 
@@ -53,18 +59,22 @@ public class ServicioDomiciliario {
     }
 
     public void setMotivo(String motivo) {
+
         this.motivo = motivo;
     }
 
     public void setEstado(EstadoServicio estado) {
+
         this.estado = estado;
     }
 
     public Paciente getPaciente() {
+
         return paciente;
     }
 
     public ProfesionalSalud getProfesionalSalud() {
+
         return profesionalSalud;
     }
 
@@ -73,34 +83,115 @@ public class ServicioDomiciliario {
     }
 
     public void setProfesionalSalud(ProfesionalSalud profesionalSalud) {
+
         this.profesionalSalud = profesionalSalud;
     }
 
     public AtencionMedica getAtencionMedica() {
+
         return atencionMedica;
     }
 
     public void setAtencionMedica(AtencionMedica atencionMedica) {
+
         this.atencionMedica = atencionMedica;
     }
 
-    public void programarServicio(LocalDate fechaProgramada) {
+    public void programarServicio(LocalDateTime fechaProgramada) {
         this.fechaProgramada = fechaProgramada;
         System.out.println("Servicio domiciliario programado para: " + fechaProgramada);
     }
 
     public void asignarProfesional(ProfesionalSalud profesionalSalud) {
+        if (profesionalSalud == null) {
+            throw new IllegalArgumentException("El profesional asignado no es correcto");
+        }
+        if (!profesionalSalud.estaDisponible(fechaProgramada)) {
+            throw new IllegalStateException("El profesional " + profesionalSalud.getNombre() + " no está disponible para " + fechaProgramada);
+        }
+
         this.profesionalSalud = profesionalSalud;
+        profesionalSalud.agregarServicio(this);
         System.out.println("Profesional de salud asignado: " + profesionalSalud.getNombre());
     }
 
     public void iniciarServicio() {
-        this.estado = EstadoServicio.EN_PROGRESO;
+        this.estado = EstadoServicio.EN_ATENCION;
         System.out.println("Servicio domiciliario iniciado.");
     }
 
-    public void finalizarServicio() {
+    public void finalizar() {
         this.estado = EstadoServicio.FINALIZADO;
         System.out.println("Servicio domiciliario finalizado.");
+    }
+
+    public void cancelar() {
+        if (estado == EstadoServicio.FINALIZADO) {
+            throw new IllegalStateException("No se puede cancelar un servicio finalizado");
+        }
+
+        this.estado = EstadoServicio.CANCELADO;
+        System.out.println("Servicio domiciliario cancelado.");
+
+        String mensaje = "El servicio " + codigo + " ha sido cancelado.";
+        if (paciente != null && profesionalSalud != null) {
+            paciente.notificar(mensaje);
+            paciente.notificar(mensaje);
+        }
+    }
+
+    public String generarReporte() {
+        String reporte = "========== REPORTE DE ATENCIÓN ==========\n";
+        reporte += "Servicio: " + codigo + "\n";
+        reporte += "Fecha programada: " + fechaProgramada + "\n";
+        reporte += "Dirección: " + direccionAtencion + "\n";
+        reporte += "Motivo: " + motivo + "\n";
+        reporte += "Estado: " + estado + "\n";
+
+        reporte += "\n--- Paciente ---\n";
+        if (paciente != null) {
+            reporte += "ID: " + paciente.getIdentificacion() + "\n";
+            reporte += "Nombre: " + paciente.getNombre() + "\n";
+            reporte += "Correo: " + paciente.getCorreo() + "\n";
+            reporte += "Teléfono: " + paciente.getTelefono() + "\n";
+            reporte += "Dirección principal: " + paciente.getDireccionPrincipal() + "\n";
+        } else {
+            reporte += "Sin paciente registrado\n";
+        }
+
+        reporte += "\n--- Profesional de salud ---\n";
+        if (profesionalSalud != null) {
+            reporte += "ID: " + profesionalSalud.getIdentificacion() + "\n";
+            reporte += "Nombre: " + profesionalSalud.getNombre() + "\n";
+            reporte += "Registro profesional: " + profesionalSalud.getRegistroProfesional() + "\n";
+            reporte += "Especialidad: " + profesionalSalud.getEspecialidad() + "\n";
+        } else {
+            reporte += "Sin profesional asignado\n";
+        }
+
+        reporte += "\n--- Atención médica ---\n";
+        if (atencionMedica != null) {
+            reporte += "Inicio: " + atencionMedica.getFechaInicio() + "\n";
+            reporte += "Fin: " + atencionMedica.getFechaFin() + "\n";
+            reporte += "Observaciones: " + atencionMedica.getObservaciones() + "\n";
+            reporte += "Recomendaciones: " + atencionMedica.getRecomendaciones() + "\n";
+
+            reporte += "\n--- Signos vitales ---\n";
+            if (atencionMedica.getSignosVitales().isEmpty()) {
+                reporte += "Sin mediciones registradas\n";
+            }
+            for (SignosVitales signos : atencionMedica.getSignosVitales()) {
+                reporte += "Medición: " + signos.getFecha() + "\n";
+                reporte += "  Temperatura: " + signos.getTemperatura() + " °C\n";
+                reporte += "  Frecuencia cardiaca: " + signos.getFrecuenciaCardiaca() + " lpm\n";
+                reporte += "  Presión arterial: " + signos.getPresionSistolica() + "/" + signos.getPresionDiastolica() + " mmHg\n";
+                reporte += "  Saturación de oxígeno: " + signos.getSaturacionOxigeno() + " %\n";
+            }
+        } else {
+            reporte += "Sin atención registrada\n";
+        }
+
+        reporte += "=========================================";
+        return reporte;
     }
 }

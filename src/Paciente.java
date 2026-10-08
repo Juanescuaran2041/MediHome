@@ -1,27 +1,27 @@
 public class Paciente extends Usuario implements Notificable{
     private String telefono;
-    private String direccion;
+    private String direccionPrincipal;
 
-    public Paciente(String identificacion, String nombre, String telefono, String direccion, String correo) {
+    public Paciente(String identificacion, String nombre, String telefono, String direccionPrincipal, String correo) {
         super(identificacion, nombre, correo);
         this.telefono = telefono;
-        this.direccion = direccion;
+        this.direccionPrincipal = direccionPrincipal;
     }
 
     public String getTelefono() {
         return telefono;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getDireccionPrincipal() {
+        return direccionPrincipal;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setDireccionPrincipal(String direccionPrincipal) {
+        this.direccionPrincipal = direccionPrincipal;
     }
 
     @Override

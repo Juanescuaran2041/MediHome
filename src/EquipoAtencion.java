@@ -4,14 +4,14 @@ import java.util.List;
 public class EquipoAtencion {
     private String codigo;
     private String nombre;
-    private String zonaAtencion;
+    private String zonaCobertura;
 
     private List<ProfesionalSalud> listaProfesionalSalud = new ArrayList<>();
 
-    public EquipoAtencion(String codigo, String nombre, String zonaAtencion) {
+    public EquipoAtencion(String codigo, String nombre, String zonaCobertura) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.zonaAtencion = zonaAtencion;
+        this.zonaCobertura = zonaCobertura;
         this.listaProfesionalSalud = new ArrayList<>();
     }
 
@@ -23,8 +23,8 @@ public class EquipoAtencion {
         return nombre;
     }
 
-    public String getZonaAtencion() {
-        return zonaAtencion;
+    public String getZonaCobertura() {
+        return zonaCobertura;
     }
 
     public void setCodigo(String codigo) {
@@ -35,23 +35,22 @@ public class EquipoAtencion {
         this.nombre = nombre;
     }
 
-    public void setZonaAtencion(String zonaAtencion) {
-        this.zonaAtencion = zonaAtencion;
+    public void setZonaCobertura(String zonaCobertura) {
+        this.zonaCobertura = zonaCobertura;
     }
 
     public List<ProfesionalSalud> getListaProfesionalSalud() {
         return listaProfesionalSalud;
     }
 
-    public void agregarProfesional(ProfesionalSalud profesionalSalud) {
+    public void agregarProfesionalSalud(ProfesionalSalud profesionalSalud) {
         if (profesionalSalud == null) {
             throw new IllegalArgumentException("El profesional registrado no es correcto");
         }
 
         listaProfesionalSalud.add(profesionalSalud);
     }
-
-    public void retirarProfesional(ProfesionalSalud profesionalSalud) {
+    public void retirarProfesionalSalud(ProfesionalSalud profesionalSalud) {
         if (profesionalSalud == null) {
             throw new IllegalArgumentException("El profesional registrado no es correcto");
         }
