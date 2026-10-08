@@ -154,8 +154,6 @@ public class ServicioDomiciliario {
             reporte += "Correo: " + paciente.getCorreo() + "\n";
             reporte += "Teléfono: " + paciente.getTelefono() + "\n";
             reporte += "Dirección principal: " + paciente.getDireccionPrincipal() + "\n";
-        } else {
-            reporte += "Sin paciente \n";
         }
 
         reporte += "\n---Profesional salud---\n";
@@ -164,8 +162,6 @@ public class ServicioDomiciliario {
             reporte += "Nombre: " + profesionalSalud.getNombre() + "\n";
             reporte += "Registro profesional: " + profesionalSalud.getRegistroProfesional() + "\n";
             reporte += "Especialidad: " + profesionalSalud.getEspecialidad() + "\n";
-        } else {
-            reporte += "Sin profesional \n";
         }
 
         reporte += "\n---Atención médica---\n";
@@ -176,14 +172,17 @@ public class ServicioDomiciliario {
             reporte += "Recomendaciones: " + atencionMedica.getRecomendaciones() + "\n";
 
             reporte += "\n---Signos vitales---\n";
-            for (SignosVitales signos : atencionMedica.getSignosVitales()) {
-                reporte += "Medición: " + signos.getFecha() + "\n";
-                reporte += "  Temperatura: " + signos.getTemperatura() + "\n";
-                reporte += "  Frecuencia cardiaca: " + signos.getFrecuenciaCardiaca() + "\n";
-                reporte += "  Presión arterial: " + signos.getPresionSistolica() + "/" + signos.getPresionDiastolica() + "\n";
-                reporte += "  Saturación de oxígeno: " + signos.getSaturacionOxigeno() + "\n";
+            if (atencionMedica.getSignosVitales() != null) {
+                for (SignosVitales signos : atencionMedica.getSignosVitales()) {
+                    reporte += "Medición: " + signos.getFecha() + "\n";
+                    reporte += "  Temperatura: " + signos.getTemperatura() + "\n";
+                    reporte += "  Frecuencia cardiaca: " + signos.getFrecuenciaCardiaca() + "\n";
+                    reporte += "  Presión arterial: " + signos.getPresionSistolica() + "/" + signos.getPresionDiastolica() + "\n";
+                    reporte += "  Saturación de oxígeno: " + signos.getSaturacionOxigeno() + "\n";
+                }
             }
         }
+
         return reporte;
     }
 }

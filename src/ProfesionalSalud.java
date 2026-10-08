@@ -43,16 +43,12 @@ public class ProfesionalSalud extends Usuario implements Notificable {
     }
 
     public boolean estaDisponible(LocalDateTime hora) {
-        if (hora == null) {
-            throw new IllegalArgumentException("La hora consultada no es correcta");
-        }
 
         for (ServicioDomiciliario servicio : serviciosAsignados) {
-            boolean activo = servicio.getEstado() != EstadoServicio.CANCELADO
-                    && servicio.getEstado() != EstadoServicio.FINALIZADO;
-
-            if (activo && hora.equals(servicio.getFechaProgramada())) {
-                return false;
+            if (servicio.getEstado() != EstadoServicio.CANCELADO || servicio.getEstado() != EstadoServicio.FINALIZADO) {
+                if (hora.equals(servicio.getFechaProgramada())){
+                    return true;
+                }
             }
         }
         return true;
