@@ -25,7 +25,7 @@ public class Main {
         );
         equipo.agregarProfesionalSalud(profesional);
 
-        LocalDateTime fechaAtencion = LocalDateTime.now().withSecond(0).withNano(0);
+        LocalDateTime fechaAtencion = LocalDateTime.now();
         ServicioDomiciliario servicio = new ServicioDomiciliario(
                 "SRV-001",
                 fechaAtencion,
